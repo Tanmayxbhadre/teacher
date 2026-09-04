@@ -13,6 +13,9 @@ import {
   GraduationCap,
 } from 'lucide-react'
 import { getTeachers, saveTeacher, deleteTeacher } from '@/lib/db'
+import type { Teacher } from '@/types/teacher'
+import { QRCodeCard } from '@/admin/QRCodeCard'
+import { TeacherEditor } from '@/admin/TeacherEditor'
 
 const AUTH_KEY = 'teachers_day_admin_authenticated'
 
