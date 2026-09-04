@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getTeacherBySlug } from '@/data/teachers'
+import { getTeacherBySlug } from '@/lib/db'
+import type { Teacher } from '@/types/teacher'
 import { OpeningExperience } from '@/sections/OpeningExperience'
 import { HeroSection } from '@/sections/HeroSection'
 import { StorySection } from '@/sections/StorySection'
@@ -16,10 +17,33 @@ import { NotFoundPage } from './NotFoundPage'
 
 export function TeacherPage() {
   const { slug } = useParams<{ slug: string }>()
-  const teacher = slug ? getTeacherBySlug(slug) : undefined
+  const [teacher, setTeacher] = useState<Teacher | null | undefined>(null)
   const [opened, setOpened] = useState(false)
+  
+  useEffect(() => {
+    async function fetchTeacher() {
+      if (slug) {
+        const data = await getTeacherBySlug(slug)
+        setTeacher(data)
+      } else {
+        setTeacher(undefined)
+      }
+    }
+    fetchTeacher()
+  }, [slug])
 
-  if (!teacher) {
+  if (teacher === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="h-12 w-12 bg-gray-200 rounded-full mb-4"></div>
+          <div className="h-4 w-32 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+    )
+  }
+
+  if (teacher === undefined) {
     return <NotFoundPage />
   }
 

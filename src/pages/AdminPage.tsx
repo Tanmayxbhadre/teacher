@@ -12,12 +12,8 @@ import {
   RotateCcw,
   GraduationCap,
 } from 'lucide-react'
-import { teachers as initialTeachers } from '@/data/teachers'
-import type { Teacher } from '@/types/teacher'
-import { QRCodeCard } from '@/admin/QRCodeCard'
-import { TeacherEditor } from '@/admin/TeacherEditor'
+import { getTeachers, saveTeacher, deleteTeacher } from '@/lib/db'
 
-const STORAGE_KEY = 'teachers_day_data_2026'
 const AUTH_KEY = 'teachers_day_admin_authenticated'
 
 export function AdminPage() {
@@ -29,15 +25,8 @@ export function AdminPage() {
   const [authError, setAuthError] = useState(false)
 
   // Teachers data state
-  const [teacherList, setTeacherList] = useState<Teacher[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (saved) return JSON.parse(saved)
-    } catch {
-      // ignore
-    }
-    return initialTeachers
-  })
+  const [teacherList, setTeacherList] = useState<Teacher[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   // Modals state
   const [selectedQRTeacher, setSelectedQRTeacher] = useState<Teacher | null>(null)
@@ -45,14 +34,18 @@ export function AdminPage() {
   const [isCreating, setIsCreating] = useState(false)
   const [showBatchPrint, setShowBatchPrint] = useState(false)
 
-  // Persist teacherList
+  // Fetch teachers from DB
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(teacherList))
-    } catch {
-      // ignore
+    async function loadData() {
+      setIsLoading(true)
+      const data = await getTeachers()
+      setTeacherList(data)
+      setIsLoading(false)
     }
-  }, [teacherList])
+    if (isAuthenticated) {
+      loadData()
+    }
+  }, [isAuthenticated])
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -71,29 +64,39 @@ export function AdminPage() {
     localStorage.removeItem(AUTH_KEY)
   }
 
-  const handleSaveTeacher = (saved: Teacher) => {
-    setTeacherList((prev) => {
-      const exists = prev.some((t) => t.id === saved.id)
-      if (exists) {
-        return prev.map((t) => (t.id === saved.id ? saved : t))
-      }
-      return [saved, ...prev]
-    })
+  const handleSaveTeacher = async (saved: Teacher) => {
+    const success = await saveTeacher(saved)
+    if (success) {
+      setTeacherList((prev) => {
+        const exists = prev.some((t) => t.id === saved.id)
+        if (exists) {
+          return prev.map((t) => (t.id === saved.id ? saved : t))
+        }
+        return [saved, ...prev]
+      })
+    } else {
+      alert("Failed to save teacher to database. Check console for details.")
+    }
     setEditingTeacher(null)
     setIsCreating(false)
   }
 
-  const handleDeleteTeacher = (id: string, name: string) => {
+  const handleDeleteTeacher = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete ${name}?`)) {
-      setTeacherList((prev) => prev.filter((t) => t.id !== id))
+      const success = await deleteTeacher(id)
+      if (success) {
+        setTeacherList((prev) => prev.filter((t) => t.id !== id))
+      } else {
+        alert("Failed to delete teacher from database.")
+      }
     }
   }
 
-  const handleResetDefaults = () => {
-    if (confirm('Reset all teachers to original sample data? This will overwrite local changes.')) {
-      setTeacherList(initialTeachers)
-      localStorage.removeItem(STORAGE_KEY)
-    }
+  const handleRefresh = async () => {
+    setIsLoading(true)
+    const data = await getTeachers()
+    setTeacherList(data)
+    setIsLoading(false)
   }
 
   // If not authenticated, render login gate
@@ -245,11 +248,11 @@ export function AdminPage() {
               <p className="text-sm font-semibold mt-1">5 September 2026</p>
             </div>
             <button
-              onClick={handleResetDefaults}
-              className="inline-flex items-center gap-1 text-[11px] text-gray-400 hover:text-red-600 transition-colors mt-2"
+              onClick={handleRefresh}
+              className="inline-flex items-center gap-1 text-[11px] text-gray-400 hover:text-gray-900 transition-colors mt-2"
             >
-              <RotateCcw size={12} />
-              <span>Reset to Sample Data</span>
+              <RotateCcw size={12} className={isLoading ? "animate-spin" : ""} />
+              <span>{isLoading ? "Syncing..." : "Refresh Data"}</span>
             </button>
           </div>
         </div>

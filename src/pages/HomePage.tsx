@@ -1,8 +1,19 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Users, Sparkles, GraduationCap } from 'lucide-react'
-import { teachers } from '@/data/teachers'
+import { getTeachers } from '@/lib/db'
+import type { Teacher } from '@/types/teacher'
 
 export function HomePage() {
+  const [teachers, setTeachers] = useState<Teacher[]>([])
+
+  useEffect(() => {
+    async function load() {
+      const data = await getTeachers()
+      setTeachers(data)
+    }
+    load()
+  }, [])
   return (
     <main
       style={{
