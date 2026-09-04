@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkles, Gift } from 'lucide-react'
 import { useReducedMotion } from '@/animations/useReducedMotion'
 import type { Teacher } from '@/types/teacher'
 
@@ -236,38 +236,40 @@ export function FinalSurprise({ teacher }: FinalSurpriseProps) {
           }}
         >
           {!giftOpened && (
-            <button
-              onClick={handleOpenGift}
-              className="magnetic-btn group"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '1.1rem 2.4rem',
-                background: 'transparent',
-                color: 'white',
-                border: '1px solid rgba(184, 149, 90, 0.5)',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-                letterSpacing: '0.2em',
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 500,
-                minHeight: '52px',
-                transition: 'background 0.3s ease, border-color 0.3s ease',
-                boxShadow: '0 0 40px rgba(184, 149, 90, 0.08)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(184, 149, 90, 0.1)'
-                e.currentTarget.style.borderColor = 'rgba(184, 149, 90, 0.8)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.borderColor = 'rgba(184, 149, 90, 0.5)'
-              }}
-            >
-              <span>OPEN YOUR GIFT</span>
-              <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            <div className="relative inline-flex items-center justify-center">
+              {/* Outer pulsing gold ambient glow */}
+              <div
+                className="absolute inset-0 rounded-full blur-xl opacity-75 animate-pulse pointer-events-none"
+                style={{
+                  background: 'radial-gradient(circle, rgba(245, 211, 138, 0.6) 0%, rgba(212, 175, 55, 0.2) 70%, transparent 100%)',
+                  transform: 'scale(1.15)',
+                }}
+              />
+
+              <button
+                onClick={handleOpenGift}
+                className="group relative inline-flex items-center gap-3.5 px-9 py-4 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 select-none shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, #FFF6DD 0%, #F5D38A 35%, #D4AF37 75%, #B38622 100%)',
+                  border: '1.5px solid rgba(255, 255, 255, 0.8)',
+                  boxShadow: '0 0 35px rgba(245, 211, 138, 0.45), 0 12px 28px rgba(0, 0, 0, 0.45)',
+                }}
+              >
+                <Gift size={18} className="text-[#3b2308] transition-transform duration-300 group-hover:rotate-12" />
+                <span
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.8rem',
+                    letterSpacing: '0.22em',
+                    fontWeight: 700,
+                    color: '#2a1703',
+                  }}
+                >
+                  OPEN YOUR GIFT
+                </span>
+                <Sparkles size={16} className="text-[#5a380e] animate-pulse" />
+              </button>
+            </div>
           )}
         </div>
       </div>

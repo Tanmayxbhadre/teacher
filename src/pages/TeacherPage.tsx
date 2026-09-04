@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getTeacherBySlug } from '@/lib/db'
 import type { Teacher } from '@/types/teacher'
+import { ScrollTrigger } from '@/lib/gsap'
 import { OpeningExperience } from '@/sections/OpeningExperience'
 import { HeroSection } from '@/sections/HeroSection'
 import { StorySection } from '@/sections/StorySection'
@@ -30,6 +31,16 @@ export function TeacherPage() {
     }
     fetchTeacher()
   }, [slug])
+
+  // Recalculate ScrollTrigger offsets once the main experience is opened
+  useEffect(() => {
+    if (opened) {
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh()
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [opened])
 
   if (teacher === null) {
     return (

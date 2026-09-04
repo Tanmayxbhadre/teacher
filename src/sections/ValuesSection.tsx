@@ -27,49 +27,49 @@ export function ValuesSection() {
     const items = section.querySelectorAll('[data-value]')
     const thankYou = section.querySelector('[data-thankyou]')
 
-    items.forEach((item) => gsap.set(item, { opacity: 0, y: 50, scale: 0.9 }))
-    if (thankYou) gsap.set(thankYou, { opacity: 0, y: 30 })
+    const ctx = gsap.context(() => {
+      items.forEach((item) => gsap.set(item, { opacity: 0, y: 50, scale: 0.9 }))
+      if (thankYou) gsap.set(thankYou, { opacity: 0, y: 30 })
 
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top 60%',
-      onEnter: () => {
-        const tl = gsap.timeline()
-        items.forEach((item, i) => {
-          tl.to(item, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            ease: 'power3.out',
-          }, i * 0.18)
-
-          // Fade out before next (except last)
-          if (i < items.length - 1) {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 70%',
+        onEnter: () => {
+          const tl = gsap.timeline()
+          items.forEach((item, i) => {
             tl.to(item, {
-              opacity: 0.08,
-              scale: 0.85,
-              duration: 0.5,
-              ease: 'power2.in',
-            }, i * 0.18 + 0.5)
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.7,
+              ease: 'power3.out',
+            }, i * 0.18)
+
+            // Fade out before next (except last)
+            if (i < items.length - 1) {
+              tl.to(item, {
+                opacity: 0.08,
+                scale: 0.85,
+                duration: 0.5,
+                ease: 'power2.in',
+              }, i * 0.18 + 0.5)
+            }
+          })
+
+          if (thankYou) {
+            tl.to(thankYou, {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: 'power3.out',
+            }, items.length * 0.18 + 0.2)
           }
-        })
+        },
+        once: true,
+      })
+    }, sectionRef)
 
-        if (thankYou) {
-          tl.to(thankYou, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out',
-          }, items.length * 0.18 + 0.2)
-        }
-      },
-      once: true,
-    })
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill())
-    }
+    return () => ctx.revert()
   }, [reduced])
 
   return (

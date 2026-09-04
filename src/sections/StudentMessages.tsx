@@ -20,25 +20,27 @@ export function StudentMessages({ messages }: StudentMessagesProps) {
       return
     }
 
-    const items = section.querySelectorAll('[data-message]')
-    items.forEach((item) => {
-      gsap.set(item, { opacity: 0, y: 40 })
-      ScrollTrigger.create({
-        trigger: item,
-        start: 'top 82%',
-        onEnter: () => {
-          gsap.to(item, {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: 'power3.out',
-          })
-        },
-        once: true,
+    const ctx = gsap.context(() => {
+      const items = section.querySelectorAll('[data-message]')
+      items.forEach((item) => {
+        gsap.set(item, { opacity: 0, y: 30 })
+        ScrollTrigger.create({
+          trigger: item,
+          start: 'top 85%',
+          onEnter: () => {
+            gsap.to(item, {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: 'power3.out',
+            })
+          },
+          once: true,
+        })
       })
-    })
+    }, sectionRef)
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill())
+    return () => ctx.revert()
   }, [reduced])
 
   return (

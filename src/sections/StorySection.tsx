@@ -31,59 +31,59 @@ export function StorySection() {
       return
     }
 
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
+    const ctx = gsap.context(() => {
+      const isMobile = window.matchMedia('(max-width: 768px)').matches
 
-    if (isMobile) {
-      // On mobile: simple scroll reveal (no pin — better perf)
-      panels.forEach((panel) => {
-        gsap.set(panel, { opacity: 0, y: 40 })
-        ScrollTrigger.create({
-          trigger: panel,
-          start: 'top 80%',
-          onEnter: () => {
-            gsap.to(panel, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' })
-          },
-          once: true,
+      if (isMobile) {
+        // On mobile: simple scroll reveal (no pin — better perf)
+        panels.forEach((panel) => {
+          gsap.set(panel, { opacity: 0, y: 30 })
+          ScrollTrigger.create({
+            trigger: panel,
+            start: 'top 85%',
+            onEnter: () => {
+              gsap.to(panel, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+            },
+            once: true,
+          })
         })
+        return
+      }
+
+      // Desktop: pinned scroll sequence
+      const totalPanels = panels.length
+      gsap.set(panels, { opacity: 0, scale: 0.95 })
+      gsap.set(panels[0], { opacity: 1, scale: 1 })
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: `+=${totalPanels * 100}%`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
       })
-      return
-    }
 
-    // Desktop: pinned scroll sequence
-    const totalPanels = panels.length
-    gsap.set(panels, { opacity: 0, scale: 0.95 })
-    gsap.set(panels[0], { opacity: 1, scale: 1 })
+      panels.forEach((panel, i) => {
+        if (i === totalPanels - 1) return
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: `+=${totalPanels * 100}%`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-      },
-    })
-
-    panels.forEach((panel, i) => {
-      if (i === totalPanels - 1) return // last panel handled below
-
-      tl.to(panel, {
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.3,
-        ease: 'power2.in',
+        tl.to(panel, {
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.3,
+          ease: 'power2.in',
+        })
+        .fromTo(
+          panels[i + 1],
+          { opacity: 0, scale: 0.95, y: 20 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+        )
       })
-      .fromTo(
-        panels[i + 1],
-        { opacity: 0, scale: 0.95, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'power3.out' }
-      )
-    })
+    }, sectionRef)
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill())
-    }
+    return () => ctx.revert()
   }, [reduced])
 
   return (

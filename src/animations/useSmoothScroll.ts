@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 
 let lenisInstance: Lenis | null = null
 
 /**
  * Initialize Lenis smooth scroll on the root.
- * Call this once at app root level.
+ * Synchronized directly with GSAP ScrollTrigger.
  */
 export function useSmoothScroll() {
   const rafRef = useRef<number>(0)
@@ -21,15 +22,17 @@ export function useSmoothScroll() {
       infinite: false,
     })
 
-    function raf(time: number) {
-      lenisInstance?.raf(time)
-      rafRef.current = requestAnimationFrame(raf)
-    }
+    // Synchronize Lenis scroll with GSAP ScrollTrigger
+    lenisInstance.on('scroll', ScrollTrigger.update)
 
-    rafRef.current = requestAnimationFrame(raf)
+    const tickerCb = (time: number) => {
+      lenisInstance?.raf(time * 1000)
+    }
+    gsap.ticker.add(tickerCb)
+    gsap.ticker.lagSmoothing(0)
 
     return () => {
-      cancelAnimationFrame(rafRef.current)
+      gsap.ticker.remove(tickerCb)
       lenisInstance?.destroy()
       lenisInstance = null
     }
