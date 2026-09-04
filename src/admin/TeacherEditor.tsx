@@ -51,7 +51,7 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
     }
   })
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'messages' | 'memories' | 'envelopes'>('profile')
+  const [activeTab, setActiveTab] = useState<'profile' | 'messages' | 'memories'>('profile')
 
   const handleNameChange = (name: string) => {
     const slug = name
@@ -89,29 +89,6 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
     setFormData((prev) => ({
       ...prev,
       studentMessages: prev.studentMessages.filter((_, i) => i !== index),
-    }))
-  }
-
-  // Envelope Messages helpers
-  const handleAddEnvelope = () => {
-    setFormData((prev) => ({
-      ...prev,
-      envelopeMessages: [...prev.envelopeMessages, ''],
-    }))
-  }
-
-  const handleUpdateEnvelope = (index: number, value: string) => {
-    setFormData((prev) => {
-      const updated = [...prev.envelopeMessages]
-      updated[index] = value
-      return { ...prev, envelopeMessages: updated }
-    })
-  }
-
-  const handleRemoveEnvelope = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      envelopeMessages: prev.envelopeMessages.filter((_, i) => i !== index),
     }))
   }
 
@@ -225,17 +202,6 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
             }`}
           >
             Memory Gallery ({formData.memories.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('envelopes')}
-            className={`py-3 border-b-2 shrink-0 transition-colors ${
-              activeTab === 'envelopes'
-                ? 'border-gray-900 text-gray-900 font-semibold'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            Envelopes ({formData.envelopeMessages.length})
           </button>
         </div>
 
@@ -632,52 +598,6 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
                         className="px-2 py-1 text-xs bg-white border rounded"
                       />
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ENVELOPES TAB */}
-          {activeTab === 'envelopes' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-gray-500">
-                  Folded interactive letters that teachers tap to unfold
-                </p>
-                <button
-                  type="button"
-                  onClick={handleAddEnvelope}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md transition-colors"
-                >
-                  <Plus size={14} />
-                  <span>Add Letter</span>
-                </button>
-              </div>
-
-              <div className="space-y-3">
-                {formData.envelopeMessages.map((msg, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center gap-3"
-                  >
-                    <span className="text-xs font-mono font-bold text-gray-400 w-6">
-                      #{idx + 1}
-                    </span>
-                    <input
-                      type="text"
-                      value={msg}
-                      onChange={(e) => handleUpdateEnvelope(idx, e.target.value)}
-                      placeholder="Secret message hidden in this envelope..."
-                      className="flex-1 px-2.5 py-1.5 text-xs bg-white border rounded focus:outline-none focus:ring-1 focus:ring-gray-900"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveEnvelope(idx)}
-                      className="p-1 text-red-500 hover:bg-red-50 rounded"
-                    >
-                      <Trash2 size={16} />
-                    </button>
                   </div>
                 ))}
               </div>

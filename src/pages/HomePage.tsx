@@ -73,7 +73,7 @@ export function HomePage() {
               margin: '0 auto 3rem',
             }}
           >
-            A collection of little surprises made with a lot of gratitude.
+            A heartfelt celebration made with a lot of gratitude.
             Each teacher receives their own personalized QR code to a message
             built especially for them.
           </p>

@@ -345,9 +345,6 @@ export function AdminPage() {
                       <span className="px-2 py-0.5 bg-gray-100 rounded-md">
                         {teacher.studentMessages.length} Messages
                       </span>
-                      <span className="px-2 py-0.5 bg-gray-100 rounded-md">
-                        {teacher.envelopeMessages.length} Envelopes
-                      </span>
                     </div>
 
                     <div className="px-5 pb-4">

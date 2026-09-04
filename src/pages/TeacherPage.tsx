@@ -9,7 +9,6 @@ import { PersonalMessage } from '@/sections/PersonalMessage'
 import { ValuesSection } from '@/sections/ValuesSection'
 import { MemoryGallery } from '@/sections/MemoryGallery'
 import { StudentMessages } from '@/sections/StudentMessages'
-import { EnvelopeReveal } from '@/sections/EnvelopeReveal'
 import { FinalSurprise } from '@/sections/FinalSurprise'
 import { ClosingSection } from '@/sections/ClosingSection'
 import { ScrollProgress } from '@/components/layout/ScrollProgress'
@@ -77,9 +76,6 @@ export function TeacherPage() {
               <MemoryGallery memories={teacher.memories} />
             )}
             <StudentMessages messages={teacher.studentMessages} />
-            {teacher.envelopeMessages.length > 0 && (
-              <EnvelopeReveal messages={teacher.envelopeMessages} />
-            )}
             <FinalSurprise teacher={teacher} />
             <ClosingSection teacher={teacher} />
           </main>
