@@ -329,11 +329,9 @@ export function AdminPage() {
                         <p className="text-xs text-gray-500 truncate">
                           {teacher.designation} • {teacher.subject}
                         </p>
-                        {teacher.classInfo?.college && (
                           <p className="text-[11px] text-gray-400 truncate mt-0.5">
-                            {teacher.classInfo.college}
+                            MGM College of Computer Science & Information Technology
                           </p>
-                        )}
                       </div>
                     </div>
 

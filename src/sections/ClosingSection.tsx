@@ -110,7 +110,7 @@ export function ClosingSection({ teacher }: ClosingSectionProps) {
                 marginBottom: '0.25rem',
               }}
             >
-              {teacher.classInfo.college}
+              MGM College of Computer Science & Information Technology
             </p>
             <p
               className="text-eyebrow"

@@ -214,7 +214,6 @@ export function HomePage() {
                     >
                       {teacher.subject}
                     </p>
-                    {teacher.classInfo?.college && (
                       <p
                         className="text-xs truncate max-w-[200px] mt-0.5"
                         style={{
@@ -222,9 +221,8 @@ export function HomePage() {
                           fontSize: '0.7rem',
                         }}
                       >
-                        {teacher.classInfo.college}
+                        MGM College of Computer Science & Information Technology
                       </p>
-                    )}
                   </div>
                 </div>
 

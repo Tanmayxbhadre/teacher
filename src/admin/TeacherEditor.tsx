@@ -45,7 +45,7 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
       classInfo: {
         class: 'Made with ❤️ by Tanmay',
         department: 'Academics',
-        college: 'University Campus',
+        college: 'MGM College of Computer Science & Information Technology',
         years: '2023–2026',
       },
     }

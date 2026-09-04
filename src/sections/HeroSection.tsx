@@ -366,7 +366,6 @@ export function HeroSection({ teacher, isVisible }: HeroSectionProps) {
                   {teacher.name}
                 </h3>
 
-                {teacher.classInfo?.college && (
                   <p
                     className="text-xs max-w-[200px] leading-relaxed"
                     style={{
@@ -374,9 +373,8 @@ export function HeroSection({ teacher, isVisible }: HeroSectionProps) {
                       color: 'var(--muted-foreground)',
                     }}
                   >
-                    {teacher.classInfo.college}
+                    MGM College of Computer Science & Information Technology
                   </p>
-                )}
               </div>
             )}
 
