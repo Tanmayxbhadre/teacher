@@ -82,7 +82,15 @@ export function ClosingSection({ teacher }: ClosingSectionProps) {
               className="text-eyebrow mb-1"
               style={{ color: 'var(--accent-secondary)', letterSpacing: '0.2em' }}
             >
-              {teacher.classInfo.class}
+              <a
+                href="https://www.createwithtanmay.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline inline-flex items-center gap-1 font-semibold"
+                style={{ color: 'var(--accent)' }}
+              >
+                {teacher.classInfo.class === 'Final Year Batch' ? 'MADE WITH ❤️ TANMAY' : teacher.classInfo.class}
+              </a>
             </p>
             <p
               style={{
@@ -171,11 +179,26 @@ export function ClosingSection({ teacher }: ClosingSectionProps) {
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontStyle: 'italic',
-              fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
-              color: 'var(--muted)',
+              fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
+              color: 'var(--muted-foreground)',
             }}
           >
-            Made with love, on 5 September 2026.
+            Made with ❤️ by{' '}
+            <a
+              href="https://www.createwithtanmay.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: 'var(--accent)',
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
+                fontWeight: 600,
+              }}
+              className="hover:opacity-80 transition-opacity not-italic"
+            >
+              Tanmay
+            </a>{' '}
+            • 5 September 2026
           </p>
         </div>
       </div>

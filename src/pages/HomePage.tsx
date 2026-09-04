@@ -258,7 +258,7 @@ export function HomePage() {
         style={{
           backgroundColor: 'var(--background)',
           borderTop: '1px solid var(--muted)',
-          padding: '2rem clamp(1.5rem, 5vw, 4rem)',
+          padding: '2.5rem clamp(1.5rem, 5vw, 4rem)',
           textAlign: 'center',
         }}
       >
@@ -266,11 +266,26 @@ export function HomePage() {
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontStyle: 'italic',
-            fontSize: '0.9rem',
+            fontSize: '1rem',
             color: 'var(--muted-foreground)',
           }}
         >
-          Made with gratitude — Teachers' Day 2026
+          Made with ❤️ by{' '}
+          <a
+            href="https://www.createwithtanmay.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: 'var(--accent)',
+              textDecoration: 'underline',
+              textUnderlineOffset: '3px',
+              fontWeight: 600,
+            }}
+            className="hover:opacity-80 transition-opacity not-italic"
+          >
+            Tanmay
+          </a>{' '}
+          • Teachers' Day 2026
         </p>
       </footer>
     </main>

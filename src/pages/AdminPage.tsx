@@ -400,6 +400,22 @@ export function AdminPage() {
               )
             })}
           </div>
+
+          {/* Footer */}
+          <footer className="mt-16 pt-8 border-t border-black/10 text-center text-xs text-gray-500">
+            <p>
+              Made with ❤️ by{' '}
+              <a
+                href="https://www.createwithtanmay.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-gray-900 underline underline-offset-2 hover:text-amber-800 transition-colors"
+              >
+                Tanmay
+              </a>{' '}
+              • Teachers' Day 2026
+            </p>
+          </footer>
         </div>
       </div>
 

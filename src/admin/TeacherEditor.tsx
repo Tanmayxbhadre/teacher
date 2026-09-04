@@ -43,7 +43,7 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
         'Your lessons will stay with us long after graduation.',
       ],
       classInfo: {
-        class: 'Final Year Batch',
+        class: 'Made with ❤️ by Tanmay',
         department: 'Academics',
         college: 'University Campus',
         years: '2023–2026',
