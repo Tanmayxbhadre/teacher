@@ -46,7 +46,7 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
         class: 'Made with ❤️ by Tanmay',
         department: 'Academics',
         college: 'MGM College of Computer Science & Information Technology',
-        years: '2023–2026',
+        years: '',
       },
     }
   })
@@ -384,7 +384,7 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
               {/* Class info */}
               <div className="pt-3 border-t border-gray-200">
                 <p className="text-xs font-semibold text-gray-700 mb-2">Class / Institution Details</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                   <input
                     type="text"
                     value={formData.classInfo?.class || ''}
@@ -419,18 +419,6 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
                       })
                     }
                     placeholder="College / School"
-                    className="px-2.5 py-1.5 border rounded-md text-xs"
-                  />
-                  <input
-                    type="text"
-                    value={formData.classInfo?.years || ''}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        classInfo: { ...formData.classInfo!, years: e.target.value },
-                      })
-                    }
-                    placeholder="Years (e.g. 2023–2026)"
                     className="px-2.5 py-1.5 border rounded-md text-xs"
                   />
                 </div>

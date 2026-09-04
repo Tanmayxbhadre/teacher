@@ -107,16 +107,9 @@ export function ClosingSection({ teacher }: ClosingSectionProps) {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.85rem',
                 color: 'var(--muted-foreground)',
-                marginBottom: '0.25rem',
               }}
             >
               MGM College of Computer Science & Information Technology
-            </p>
-            <p
-              className="text-eyebrow"
-              style={{ color: 'var(--muted)', fontSize: '0.6rem', letterSpacing: '0.15em' }}
-            >
-              {teacher.classInfo.years}
             </p>
           </div>
         )}
