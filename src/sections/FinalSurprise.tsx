@@ -3,6 +3,7 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { ArrowRight, Sparkles, Gift } from 'lucide-react'
 import { useReducedMotion } from '@/animations/useReducedMotion'
 import type { Teacher } from '@/types/teacher'
+import defaultBouquetImage from '@/assets/gift-bouquet.jpg'
 
 interface FinalSurpriseProps {
   teacher: Teacher
@@ -274,10 +275,10 @@ export function FinalSurprise({ teacher }: FinalSurpriseProps) {
         </div>
       </div>
 
-      {/* Gift reveal — final message */}
+      {/* Gift reveal — final message & keepsake */}
       <div
         ref={giftRef}
-        className="relative z-10 text-center flex flex-col items-center gap-6 max-w-2xl mx-auto"
+        className="relative z-10 w-full max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14"
         style={{
           opacity: 0,
           transform: 'translateY(30px) scale(0.98)',
@@ -286,95 +287,147 @@ export function FinalSurprise({ teacher }: FinalSurpriseProps) {
           marginTop: '2rem',
         }}
       >
-        <p
-          className="text-eyebrow"
-          style={{ color: 'var(--accent-secondary)', letterSpacing: '0.3em' }}
-        >
-          DEAR {nameParts},
-        </p>
+        {/* LEFT COLUMN — Heartfelt Editorial Letter */}
+        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left gap-5 max-w-xl">
+          <p
+            className="text-eyebrow"
+            style={{ color: 'var(--accent-secondary)', letterSpacing: '0.3em' }}
+          >
+            DEAR {nameParts},
+          </p>
 
-        <div className="flex flex-col gap-4 text-center">
-          {[
-            'Thank you for teaching us,',
-            'guiding us,',
-            'challenging us,',
-            'and believing in us.',
-          ].map((line, i) => (
+          <div className="flex flex-col gap-3">
+            {[
+              'Thank you for teaching us,',
+              'guiding us,',
+              'challenging us,',
+              'and believing in us.',
+            ].map((line, i) => (
+              <p
+                key={i}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: 'clamp(1.2rem, 3vw, 1.75rem)',
+                  fontWeight: i === 3 ? 500 : 300,
+                  fontStyle: i === 3 ? 'normal' : 'italic',
+                  color: i === 3 ? '#FFE8B8' : 'rgba(255,255,255,0.9)',
+                  lineHeight: 1.4,
+                }}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+
+          <div className="mt-2">
             <p
-              key={i}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: i < 3
-                  ? 'clamp(1.1rem, 2.8vw, 1.6rem)'
-                  : 'clamp(1.1rem, 2.8vw, 1.6rem)',
-                fontWeight: i === 3 ? 400 : 300,
-                fontStyle: i === 3 ? 'normal' : 'italic',
-                color: 'rgba(255,255,255,0.8)',
-                lineHeight: 1.5,
+                fontSize: 'clamp(1rem, 2.2vw, 1.25rem)',
+                fontStyle: 'italic',
+                color: 'rgba(255,255,255,0.65)',
+                lineHeight: 1.7,
               }}
             >
-              {line}
+              You didn't just teach a subject.
+              <br />
+              You became part of our journey.
             </p>
-          ))}
-        </div>
+          </div>
 
-        <div className="mt-4">
-          <p
+          <div
+            className="my-3 py-6"
             style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(0.95rem, 2.2vw, 1.2rem)',
-              fontStyle: 'italic',
-              color: 'rgba(255,255,255,0.5)',
-              lineHeight: 1.7,
+              borderTop: '1px solid rgba(255,255,255,0.12)',
+              borderBottom: '1px solid rgba(255,255,255,0.12)',
+              width: '100%',
             }}
           >
-            You didn't just teach a subject.
-            <br />
-            You became part of our journey.
-          </p>
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 'clamp(1.6rem, 4vw, 2.6rem)',
+                fontWeight: 300,
+                letterSpacing: '0.02em',
+                color: 'white',
+                lineHeight: 1.2,
+              }}
+            >
+              YOU ARE A TEACHER
+              <br />
+              <span style={{ color: 'var(--accent-secondary)' }}>WE'LL REMEMBER.</span>
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center lg:items-start gap-1">
+            <p
+              style={{
+                fontFamily: "'Dancing Script', cursive",
+                fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)',
+                fontWeight: 700,
+                color: 'rgba(255,255,255,0.95)',
+              }}
+            >
+              Happy Teachers' Day ❤️
+            </p>
+            <p
+              className="text-eyebrow mt-1"
+              style={{ color: 'rgba(255,255,255,0.35)', letterSpacing: '0.2em' }}
+            >
+              5 September 2026
+            </p>
+          </div>
         </div>
 
-        <div
-          className="mt-8 py-8"
-          style={{
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            borderBottom: '1px solid rgba(255,255,255,0.1)',
-            width: '100%',
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(1.8rem, 5vw, 3.5rem)',
-              fontWeight: 300,
-              letterSpacing: '0.02em',
-              color: 'white',
-              lineHeight: 1.2,
-            }}
-          >
-            YOU ARE A TEACHER
-            <br />
-            <span style={{ color: 'var(--accent-secondary)' }}>WE'LL REMEMBER.</span>
-          </p>
+        {/* RIGHT COLUMN — Floating Bouquet Keepsake */}
+        <div className="w-full lg:w-auto flex flex-col items-center flex-shrink-0">
+          <div className="relative flex flex-col items-center text-center max-w-sm sm:max-w-md w-full">
+            {/* Ambient gold glow behind bouquet */}
+            <div
+              className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl opacity-30 pointer-events-none"
+              style={{
+                background: 'radial-gradient(circle, #E6C280 0%, #C99E55 50%, transparent 70%)',
+              }}
+            />
+
+            {/* Bouquet Image with natural floating drop-shadow */}
+            <div className="relative z-10 w-64 sm:w-80 md:w-96 transition-transform duration-500 hover:scale-105 select-none">
+              <img
+                src={teacher.giftImage || defaultBouquetImage}
+                alt={`Special gift bouquet for ${teacher.name}`}
+                className="w-full h-auto object-contain"
+                style={{
+                  filter: 'drop-shadow(0 25px 45px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(230, 194, 128, 0.2))',
+                }}
+                onError={(e) => {
+                  ;(e.target as HTMLImageElement).src = defaultBouquetImage
+                }}
+              />
+            </div>
+
+            {/* Elegant Tribute Sub-badge */}
+            <div className="relative z-10 mt-2 text-center">
+              <p
+                className="text-[10px] sm:text-[11px] tracking-[0.25em] uppercase font-semibold"
+                style={{ color: 'var(--accent-secondary)' }}
+              >
+                A SPECIAL GIFT FOR YOU
+              </p>
+              <h3
+                className="text-xl sm:text-2xl text-white mt-1 font-light tracking-wide"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                Presented to {teacher.name}
+              </h3>
+              <p
+                className="text-[11px] text-gray-400 mt-0.5 tracking-wider font-light"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                MGM College of Computer Science & Information Technology
+              </p>
+            </div>
+          </div>
         </div>
-
-        <p
-          style={{
-            fontFamily: "'Dancing Script', cursive",
-            fontSize: 'clamp(1.4rem, 3.5vw, 2rem)',
-            fontWeight: 700,
-            color: 'rgba(255,255,255,0.9)',
-          }}
-        >
-          Happy Teachers' Day ❤️
-        </p>
-
-        <p
-          className="text-eyebrow"
-          style={{ color: 'rgba(255,255,255,0.3)', letterSpacing: '0.2em' }}
-        >
-          5 September 2026
-        </p>
       </div>
     </section>
   )

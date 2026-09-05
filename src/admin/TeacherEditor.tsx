@@ -353,6 +353,47 @@ export function TeacherEditor({ initialTeacher, onSave, onCancel }: TeacherEdito
                 </div>
               </div>
 
+              {/* Gift Reveal Photo / Keepsake */}
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Open Gift Photo / Keepsake File (Optional)
+                </label>
+                <div className="flex gap-3 items-center">
+                  {formData.giftImage ? (
+                    <img
+                      src={formData.giftImage}
+                      alt="Gift Preview"
+                      className="w-12 h-12 rounded-lg object-cover border border-gray-200 shadow-sm flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg border border-dashed border-gray-300 flex items-center justify-center text-gray-400 bg-gray-50 flex-shrink-0">
+                      <ImageIcon size={18} />
+                    </div>
+                  )}
+                  <div className="flex-1 flex gap-2">
+                    <input
+                      type="text"
+                      value={formData.giftImage || ''}
+                      onChange={(e) => setFormData({ ...formData, giftImage: e.target.value })}
+                      placeholder="https://... or upload gift keepsake image"
+                      className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+                    />
+                    <label className="flex items-center justify-center px-3 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-xs font-medium text-gray-700 cursor-pointer transition-colors whitespace-nowrap">
+                      Upload File
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        onChange={(e) => handleFileUpload(e, (base64) => setFormData({ ...formData, giftImage: base64 }))}
+                      />
+                    </label>
+                  </div>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-1">
+                  Displayed on the right side when the teacher clicks "OPEN YOUR GIFT".
+                </p>
+              </div>
+
               {/* Hero quote & eyebrow */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

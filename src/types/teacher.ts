@@ -30,6 +30,7 @@ export interface Teacher {
   subject: string
   designation: string
   photo?: string             // Optional: if available good, if not available simply wish
+  giftImage?: string         // Optional: image / keepsake file for the Open Gift reveal
   quote: string              // Hero section quote
   heroMessage: string        // "WITH GRATITUDE" eyebrow context
   personalizedMessage: string
